@@ -207,7 +207,7 @@ def _load_huggingface_embeddings_llm(
     API_URL = f"{config.api_base}/{config.model}"
     headers = {"Authorization": f"Bearer {config.api_key}"}
 
-    def query(payload):
+    async def query(payload):
         response = requests.post(API_URL, headers=headers, json=payload)
         return response.json()
         

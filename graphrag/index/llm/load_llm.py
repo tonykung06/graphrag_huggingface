@@ -196,6 +196,22 @@ def _load_openai_embeddings_llm(
         cache,
     )
 
+def _load_huggingface_embeddings_llm(
+    on_error: ErrorHandlerFn,
+    cache: LLMCache,
+    config: LanguageModelConfig,
+    azure=False,
+):
+    import requests
+
+    API_URL = f"https://api-inference.huggingface.co/models/{config.model}"
+    headers = {"Authorization": f"Bearer {config.api_key}"}
+
+    def query(payload):
+        response = requests.post(API_URL, headers=headers, json=payload)
+        return response.json()
+        
+    return query
 
 def _create_openai_config(config: LLMParameters, azure: bool) -> OpenAIConfig:
     encoding_model = config.encoding_model or defs.ENCODING_MODEL
@@ -284,6 +300,10 @@ loaders = {
     },
     LLMType.OpenAIEmbedding: {
         "load": _load_openai_embeddings_llm,
+        "chat": False,
+    },
+    LLMType.HuggingfaceEmbedding: {
+        "load": _load_huggingface_embeddings_llm,
         "chat": False,
     },
     LLMType.AzureOpenAIEmbedding: {

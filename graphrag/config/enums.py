@@ -102,6 +102,7 @@ class LLMType(str, Enum):
 
     # Embeddings
     OpenAIEmbedding = "openai_embedding"
+    HuggingfaceEmbedding = "huggingface_embedding"
     AzureOpenAIEmbedding = "azure_openai_embedding"
 
     # Chat Completion

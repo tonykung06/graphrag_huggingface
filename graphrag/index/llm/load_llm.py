@@ -208,7 +208,7 @@ def _load_huggingface_embeddings_llm(
     from types import SimpleNamespace
 
     API_URL = f"{config.api_base}/{config.model}"
-    headers = {"Authorization": f"Bearer {config.api_key}"}
+    headers = {"Authorization": f"Bearer {config.api_key}", "x-wait-for-model": "true"}
 
     async def query(payload):
         response = requests.post(API_URL, headers=headers, json=payload).json()

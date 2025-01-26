@@ -197,7 +197,7 @@ def _load_huggingface_embeddings_llm(
 ):
     import requests
 
-    API_URL = f"https://api-inference.huggingface.co/models/{config.model}"
+    API_URL = f"{config.api_base}/{config.model}"
     headers = {"Authorization": f"Bearer {config.api_key}"}
 
     def query(payload):

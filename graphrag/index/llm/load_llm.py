@@ -211,11 +211,9 @@ def _load_huggingface_embeddings_llm(
     headers = {"Authorization": f"Bearer {config.api_key}", "x-wait-for-model": "true"}
 
     async def query(payload):
-        response = requests.post(API_URL, headers=headers, json=payload).json()
-        print("OMG", response)
         result = { 
             'output': {
-                'embeddings': response
+                'embeddings': requests.post(API_URL, headers=headers, json=payload).json()
             },
         }
         return json.loads(json.dumps(result), object_hook=lambda d: SimpleNamespace(**d))
